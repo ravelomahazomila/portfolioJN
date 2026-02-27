@@ -1452,24 +1452,24 @@
                     </div>
                 </div>
                 <div class="project-card">
-                        <div class="project-info">
-                            <h3 class="section-title"><span>2020-2021</span></h3><br>
-                            <u>
-                                <h4>Baccalauréat Scientifique: Série D</h4>
-                            </u>
-                            <p>Lycée Saint Michel Imerina Imady Ambositra. La Série D du baccalauréat est une filière
-                                scientifique généraliste, présente dans plusieurs pays africains et malgaches notamment.
-                                C'est l'une des séries du baccalauréat qui met l'accent sur les sciences de la vie et de
-                                la terre ainsi que les mathématiques. </p>
-                            <u>
-                                <h4>Les domaines d'application principaux:</h4>
-                            </u>
-                            <p>Bonne base en mathématiques ET en sciences naturelles
-                                Bonnes bases scientifiques généralistes
-                                Sciences Naturelles et Mathématiques
-                            </p>
-                        </div>
+                    <div class="project-info">
+                        <h3 class="section-title"><span>2020-2021</span></h3><br>
+                        <u>
+                            <h4>Baccalauréat Scientifique: Série D</h4>
+                        </u>
+                        <p>Lycée Saint Michel Imerina Imady Ambositra. La Série D du baccalauréat est une filière
+                            scientifique généraliste, présente dans plusieurs pays africains et malgaches notamment.
+                            C'est l'une des séries du baccalauréat qui met l'accent sur les sciences de la vie et de
+                            la terre ainsi que les mathématiques. </p>
+                        <u>
+                            <h4>Les domaines d'application principaux:</h4>
+                        </u>
+                        <p>Bonne base en mathématiques ET en sciences naturelles
+                            Bonnes bases scientifiques généralistes
+                            Sciences Naturelles et Mathématiques
+                        </p>
                     </div>
+                </div>
         </section>
 
         <section id="competences" class="section">
@@ -1651,7 +1651,7 @@
         <section id="contact" class="section contact-section">
             <h2 class="section-title">Me <span>contacter</span></h2>
             <div class="contact-container">
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contactForm" action="https://formspree.io/f/xeeldkbb" method="POST">
                     <div class="form-group">
                         <i class="fas fa-user"></i>
                         <input type="text" class="form-control" placeholder="Votre nom" required>
@@ -1668,6 +1668,7 @@
                         <i class="fas fa-comment"></i>
                         <textarea class="form-control" placeholder="Votre message" required></textarea>
                     </div>
+                    <input type="hidden" name="_next" value="https://ravelomahazomila.github.io/portfolioJN/merci.html">
                     <button type="submit" class="submit-btn">
                         <i class="fas fa-paper-plane"></i> Envoyer le message
                     </button>
@@ -1736,6 +1737,22 @@
     </div>
 
     <script>
+        const form = document.getElementById("contactForm");
+
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
+    });
+
+    alert("Message envoyé avec succès ✅");
+    form.reset();
+});
         // ==================== CONFIGURATION IA ====================
         const AI_CONFIG = {
             name: "Toky Jean Noël",
