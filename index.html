@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Toky JN - Version IA Intégrée</title>
+    <title>Portfolio Toky JN</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -1737,22 +1737,37 @@
     </div>
 
     <script>
+        // ==================== GESTIONNAIRE UNIQUE POUR LE FORMULAIRE ====================
         const form = document.getElementById("contactForm");
 
-form.addEventListener("submit", async function(e) {
-    e.preventDefault();
+        if (form) {
+            form.addEventListener("submit", async function(e) {
+                e.preventDefault();
 
-    const data = new FormData(form);
+                const data = new FormData(form);
 
-    await fetch(form.action, {
-        method: "POST",
-        body: data,
-        headers: { 'Accept': 'application/json' }
-    });
+                try {
+                    const response = await fetch(form.action, {
+                        method: "POST",
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
 
-    alert("Message envoyé avec succès ✅");
-    form.reset();
-});
+                    if (response.ok) {
+                        alert("✅ Message envoyé avec succès !");
+                        form.reset();
+                        
+                        // Rediriger vers merci.html APRÈS l'envoi réussi
+                        window.location.href = "merci.html";
+                    } else {
+                        alert("❌ Erreur lors de l'envoi. Veuillez réessayer.");
+                    }
+                } catch (error) {
+                    alert("❌ Erreur de connexion. Vérifiez votre réseau.");
+                }
+            });
+        }
+
         // ==================== CONFIGURATION IA ====================
         const AI_CONFIG = {
             name: "Toky Jean Noël",
@@ -1817,7 +1832,6 @@ form.addEventListener("submit", async function(e) {
             messagesContainer.appendChild(messageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // Sauvegarder dans l'historique
             conversationHistory.push({
                 role: isUser ? 'user' : 'assistant',
                 message: message,
@@ -1856,7 +1870,6 @@ form.addEventListener("submit", async function(e) {
         function getAIResponse(message) {
             const lowerMessage = message.toLowerCase();
 
-            // Compétences
             if (lowerMessage.includes('compétence') || lowerMessage.includes('skill') ||
                 lowerMessage.includes('sais') || lowerMessage.includes('maîtrise')) {
                 return `Voici les compétences de Toky :\n\n` +
@@ -1865,13 +1878,11 @@ form.addEventListener("submit", async function(e) {
                     `💻 Systèmes & Réseaux : ${AI_CONFIG.skills.systems.join(', ')}`;
             }
 
-            // Projets
             if (lowerMessage.includes('projet')) {
                 return `Toky a réalisé ${AI_CONFIG.projects.length} projets :\n\n` +
                     AI_CONFIG.projects.map((p, i) => `📁 Projet ${i + 1} : ${p}`).join('\n');
             }
 
-            // Formation
             if (lowerMessage.includes('formation') || lowerMessage.includes('étude') ||
                 lowerMessage.includes('diplôme') || lowerMessage.includes('bac')) {
                 return `🎓 Parcours académique de Toky :\n\n` +
@@ -1880,14 +1891,12 @@ form.addEventListener("submit", async function(e) {
                     `📗 Baccalauréat : ${AI_CONFIG.education.baccalaureate}`;
             }
 
-            // Expérience
             if (lowerMessage.includes('expérience') || lowerMessage.includes('stage') ||
                 lowerMessage.includes('travail')) {
                 return `💼 Expériences de Toky :\n\n` +
                     AI_CONFIG.experience.map(e => `• ${e}`).join('\n');
             }
 
-            // Contact
             if (lowerMessage.includes('contact') || lowerMessage.includes('email') ||
                 lowerMessage.includes('téléphone') || lowerMessage.includes('joindre')) {
                 return `📬 Coordonnées de Toky :\n\n` +
@@ -1896,7 +1905,6 @@ form.addEventListener("submit", async function(e) {
                     `📍 Localisation : ${AI_CONFIG.contact.location}`;
             }
 
-            // Bonjour
             if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') ||
                 lowerMessage.includes('coucou') || lowerMessage.includes('hello')) {
                 return `👋 Bonjour ! Je suis ravi de vous aider. Vous pouvez me poser des questions sur :\n\n` +
@@ -1907,7 +1915,6 @@ form.addEventListener("submit", async function(e) {
                     `• Ses coordonnées de contact`;
             }
 
-            // Réponse par défaut
             return `Merci pour votre question ! Pour mieux vous aider, voici ce que je peux vous dire sur Toky :\n\n` +
                 `🎯 Étudiant en Master 1 Sciences des Données et IA\n` +
                 `💻 Passionné par le développement web et les nouvelles technologies\n` +
@@ -1921,26 +1928,17 @@ form.addEventListener("submit", async function(e) {
 
             if (!message) return;
 
-            // Afficher le message de l'utilisateur
             addMessage(message, true);
             input.value = '';
 
-            // Montrer l'indicateur de frappe
             showTypingIndicator();
 
-            // Tracker l'analytics
             trackAnalytics('message_sent', { message: message.substring(0, 50) });
 
-            // Simuler un délai de réflexion
             setTimeout(() => {
-                // Cacher l'indicateur de frappe
                 hideTypingIndicator();
-
-                // Obtenir et afficher la réponse
                 const response = getAIResponse(message);
                 addMessage(response, false);
-
-                // Tracker la réponse
                 trackAnalytics('response_sent', { length: response.length });
             }, 1500);
         }
@@ -1973,11 +1971,9 @@ form.addEventListener("submit", async function(e) {
 
             console.log('Analytics:', analyticsData);
 
-            // Sauvegarder dans localStorage pour stats hors ligne
             let analytics = JSON.parse(localStorage.getItem('portfolio_analytics') || '[]');
             analytics.push(analyticsData);
 
-            // Garder seulement les 100 derniers événements
             if (analytics.length > 100) {
                 analytics = analytics.slice(-100);
             }
@@ -2004,7 +2000,6 @@ form.addEventListener("submit", async function(e) {
 
             document.body.appendChild(notification);
 
-            // Auto-supprimer après 5 secondes
             setTimeout(() => {
                 if (notification.parentElement) {
                     notification.remove();
@@ -2014,10 +2009,8 @@ form.addEventListener("submit", async function(e) {
 
         // ==================== ÉVÉNEMENTS ====================
         document.addEventListener('DOMContentLoaded', function () {
-            // Tracker la visite
             trackAnalytics('page_view');
 
-            // Message de bienvenue différé
             setTimeout(() => {
                 showNotification(
                     'Assistant IA',
@@ -2025,7 +2018,6 @@ form.addEventListener("submit", async function(e) {
                 );
             }, 3000);
 
-            // Tracker les clics sur les liens
             document.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', function (e) {
                     trackAnalytics('link_click', {
@@ -2035,7 +2027,6 @@ form.addEventListener("submit", async function(e) {
                 });
             });
 
-            // Tracker le temps passé
             let startTime = Date.now();
             window.addEventListener('beforeunload', function () {
                 const timeSpent = Math.round((Date.now() - startTime) / 1000);
@@ -2043,9 +2034,8 @@ form.addEventListener("submit", async function(e) {
             });
         });
 
-        // ==================== VOS SCRIPTS ORIGINAUX ====================
+        // ==================== ANIMATION CANVAS ====================
         document.addEventListener('DOMContentLoaded', () => {
-            // Canvas animation
             const canvas = document.getElementById('backgroundCanvas');
             const ctx = canvas.getContext('2d');
 
@@ -2142,17 +2132,6 @@ form.addEventListener("submit", async function(e) {
                 });
             });
 
-            // Formulaire de contact
-            const contactForm = document.getElementById('contactForm');
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Message envoyé ! (Démonstration)');
-                contactForm.reset();
-
-                // Tracker l'événement
-                trackAnalytics('contact_form_submit');
-            });
-
             // Animation des compétences
             const skillLevels = document.querySelectorAll('.skill-level');
             const observer = new IntersectionObserver((entries) => {
@@ -2167,5 +2146,4 @@ form.addEventListener("submit", async function(e) {
         });
     </script>
 </body>
-
 </html>
