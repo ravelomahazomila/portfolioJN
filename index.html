@@ -1292,9 +1292,11 @@
             <div class="hero-content-left">
                 <h1>Bonjour, je suis <span class="highlight">RAVELOMAHAZOMILA</span></h1>
                 <h2>Toky Jean Noël</h2>
-                <p>"Étudiant en Sciences de Données et Intelligence Artificielle (S.D.I.A) à EMIT (Ecole de Management
-                    et
-                    Innovation Technologique.), passionné par le développement web et les nouvelles technologies."</p>
+                <p>"Étudiant en Sciences de Données et Intelligence Artificielle (SDIA) à l'EMIT (Ecole de Management et
+                    Innovation Technologique.), je suis passionné par
+                    l'analyse de données et la création de modèles prédictifs. Je recherche une opportunité
+                    (stage/alternance) pour mettre en pratique ma maîtrise du Machine Learning et du traitement de
+                    données, passionné par le développement web et les nouvelles technologies."</p>
 
                 <div class="contact-info">
                     <p><i class="fas fa-envelope"></i> ravelomahazomilatokyjeannoel@gmail.com</p>
@@ -1738,36 +1740,36 @@
 
     <script>
         // ==================== GESTIONNAIRE UNIQUE POUR LE FORMULAIRE ====================
-const form = document.getElementById("contactForm");
+        const form = document.getElementById("contactForm");
 
-if (form) {
-    form.addEventListener("submit", async function(e) {
-        e.preventDefault(); // tsy mandeha automatique
+        if (form) {
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault(); // tsy mandeha automatique
 
-        const data = new FormData(form);
+                const data = new FormData(form);
 
-        try {
-            const response = await fetch(form.action, {
-                method: "POST",
-                body: data,
-                headers: { 'Accept': 'application/json' }
+                try {
+                    const response = await fetch(form.action, {
+                        method: "POST",
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        alert("✅ Message envoyé avec succès !");
+                        form.reset();
+
+                        // Rediriger vers merci.html APRÈS l'envoi réussi
+                        window.location.href = "merci.html";
+                    } else {
+                        alert("❌ Erreur lors de l'envoi. Veuillez réessayer.");
+                    }
+                } catch (error) {
+                    alert("❌ Erreur de connexion. Vérifiez votre réseau.");
+                    console.error(error);
+                }
             });
-
-            if (response.ok) {
-                alert("✅ Message envoyé avec succès !");
-                form.reset();
-
-                // Rediriger vers merci.html APRÈS l'envoi réussi
-                window.location.href = "merci.html";
-            } else {
-                alert("❌ Erreur lors de l'envoi. Veuillez réessayer.");
-            }
-        } catch (error) {
-            alert("❌ Erreur de connexion. Vérifiez votre réseau.");
-            console.error(error);
         }
-    });
-}
 
         // ==================== CONFIGURATION IA ====================
         const AI_CONFIG = {
@@ -2147,4 +2149,5 @@ if (form) {
         });
     </script>
 </body>
+
 </html>
