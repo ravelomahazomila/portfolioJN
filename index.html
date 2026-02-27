@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Toky JN</title>
+    <title>Portfolio Toky JN - Version IA Intégrée</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ==================== VOS STYLES ORIGINAUX ==================== */
         * {
             margin: 0;
             padding: 0;
@@ -92,17 +93,6 @@
 
         .navbar nav ul li a:hover::after {
             width: 100%;
-        }
-
-        .theme-switcher {
-            font-size: 1.2em;
-            cursor: pointer;
-            color: #e0e0e0;
-            transition: color 0.3s ease;
-        }
-
-        .theme-switcher:hover {
-            color: #a766ff;
         }
 
         .hero-section {
@@ -851,12 +841,434 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #924dff;
         }
+
+        /* ==================== STYLES POUR L'IA ==================== */
+        .ai-assistant-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .ai-chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a766ff, #7c3aed);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(167, 102, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        .ai-chat-toggle:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 25px rgba(167, 102, 255, 0.6);
+        }
+
+        .ai-chat-toggle::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 15px;
+            height: 15px;
+            background: #4ade80;
+            border-radius: 50%;
+            border: 2px solid #1a0f2b;
+            animation: onlinePulse 2s infinite;
+        }
+
+        @keyframes onlinePulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .ai-chat-container {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            height: 550px;
+            background: linear-gradient(135deg, #1a0f2b, #2d1b48);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(167, 102, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transform-origin: bottom right;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .ai-chat-container.open {
+            display: flex;
+        }
+
+        .ai-chat-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #2d1b48, #1a0f2b);
+            border-bottom: 1px solid rgba(167, 102, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .ai-header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #a766ff, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .ai-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-title h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .ai-title span {
+            font-size: 12px;
+            color: #a766ff;
+        }
+
+        .ai-header-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .ai-header-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            animation: messageSlide 0.3s ease;
+            position: relative;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-message.user {
+            background: linear-gradient(135deg, #a766ff, #7c3aed);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .ai-message.bot {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border-bottom-left-radius: 5px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(167, 102, 255, 0.2);
+        }
+
+        .ai-message.bot::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -5px;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(167, 102, 255, 0.2);
+            border-bottom: 1px solid rgba(167, 102, 255, 0.2);
+            border-radius: 0 0 10px 0;
+        }
+
+        .ai-message.user::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: #a766ff;
+            border-left: 1px solid #7c3aed;
+            border-bottom: 1px solid #7c3aed;
+            border-radius: 0 0 0 10px;
+        }
+
+        .ai-message-time {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .ai-typing {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 16px;
+            border-radius: 15px;
+            width: fit-content;
+            border-bottom-left-radius: 5px;
+        }
+
+        .ai-typing-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .ai-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #a766ff;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .ai-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .ai-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .ai-chat-input {
+            padding: 20px;
+            border-top: 1px solid rgba(167, 102, 255, 0.3);
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .ai-chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(167, 102, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .ai-chat-input input:focus {
+            border-color: #a766ff;
+            box-shadow: 0 0 15px rgba(167, 102, 255, 0.3);
+        }
+
+        .ai-chat-input input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .ai-chat-input button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a766ff, #7c3aed);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .ai-chat-input button:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 0 20px rgba(167, 102, 255, 0.5);
+        }
+
+        .ai-suggestions {
+            display: flex;
+            gap: 10px;
+            padding: 10px 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .ai-suggestions::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ai-suggestion-chip {
+            background: rgba(167, 102, 255, 0.2);
+            border: 1px solid rgba(167, 102, 255, 0.3);
+            color: #a766ff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .ai-suggestion-chip:hover {
+            background: #a766ff;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Notification */
+        .ai-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1a0f2b, #2d1b48);
+            border-left: 4px solid #a766ff;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideInRight 0.3s ease;
+            max-width: 350px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .ai-notification-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #a766ff, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .ai-notification-content {
+            flex: 1;
+        }
+
+        .ai-notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .ai-notification-message {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .ai-notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .ai-notification-close:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
     <canvas id="backgroundCanvas"></canvas>
 
+    <!-- ==================== VOTRE CODE ORIGINAL ==================== -->
     <header class="navbar">
         <div class="logo">Portfolio.</div>
         <nav>
@@ -880,9 +1292,9 @@
             <div class="hero-content-left">
                 <h1>Bonjour, je suis <span class="highlight">RAVELOMAHAZOMILA</span></h1>
                 <h2>Toky Jean Noël</h2>
-                <p>"Étudiant en Sciences de Données et Intelligence Atificielle (S.D.I.A) à EMIT (Ecole de Management et
-                    Innovation Technologique.), passionné par le
-                    développement web et les nouvelles technologies."</p>
+                <p>"Étudiant en Sciences de Données et Intelligence Artificielle (S.D.I.A) à EMIT (Ecole de Management
+                    et
+                    Innovation Technologique.), passionné par le développement web et les nouvelles technologies."</p>
 
                 <div class="contact-info">
                     <p><i class="fas fa-envelope"></i> ravelomahazomilatokyjeannoel@gmail.com</p>
@@ -910,22 +1322,20 @@
                 </div>
             </div>
         </section>
+
         <section id="a-propos" class="section">
             <h2 class="section-title">À <span>propos</span> de moi</h2>
             <div class="about-content">
                 <p>Actuellement étudiant en Master 1 en Science des Données et Intelligence Artificielle, je suis
-                    passionné par l’analyse de données, le machine learning et le développement de solutions
-                    intelligentes.
-
-                    Titulaire d’une Licence (L3) en Informatique et Télécommunications, j’ai acquis de solides bases en
+                    passionné par l'analyse de données, le machine learning et le développement de solutions
+                    intelligentes. Titulaire d'une Licence (L3) en Informatique et Télécommunications, j'ai acquis de
+                    solides bases en
                     programmation, bases de données, réseaux informatiques et systèmes.</p>
                 <p>Mon objectif est de devenir un expert en Science des Données et Intelligence Artificielle, capable de
-                    concevoir et développer des solutions innovantes basées sur l’analyse intelligente des données.
-
+                    concevoir et développer des solutions innovantes basées sur l'analyse intelligente des données.
                     À long terme, mon ambition est de contribuer au développement technologique, en participant à des
-                    projets de recherche, en créant des solutions innovantes
-                    ou en développant des systèmes intelligents capables d’optimiser les performances des organisations.
-                </p>
+                    projets de recherche, en créant des solutions innovantes ou en développant des systèmes intelligents
+                    capables d'optimiser les performances des organisations.</p>
 
                 <div class="about-stats">
                     <div class="stat-item">
@@ -943,6 +1353,7 @@
                 </div>
             </div>
         </section>
+
         <section id="experience" class="section">
             <h2 class="section-title">Mon <span>expérience</span></h2>
             <div class="timeline">
@@ -950,7 +1361,7 @@
                     <div class="timeline-content">
                         <span class="timeline-date">2024 - Présent</span>
                         <h3>Stage Professionnel</h3>
-                        <h4><u>Caisse d'Epargne, Tsaralalana: </u></h4>
+                        <h4><u>Caisse d'Epargne, Tsaralalana:</u></h4>
                         <p>Développement d'un système de gestion de scolarité. Acquisition d'expérience en développement
                             logiciel en environnement professionnel.</p>
                     </div>
@@ -960,7 +1371,7 @@
                     <div class="timeline-content">
                         <span class="timeline-date">Sept - Oct 2023</span>
                         <h3>Stage d'Observation</h3>
-                        <h4><u>Ministère de la Communication: </u></h4>
+                        <h4><u>Ministère de la Communication:</u></h4>
                         <p>Installation de systèmes Windows, câblage et configuration de réseaux d'entreprise.
                             Découverte des infrastructures réseaux.</p>
                     </div>
@@ -971,24 +1382,9 @@
                         <span class="timeline-date">2022-2023</span>
                         <h3>Voyage d'Étude L1</h3>
                         <h4><u>Toamasina:</u></h4>
-                        <p>Dans le cadre de ma première année universitaire, j’ai participé à un voyage d’étude à
-                            Toamasina, incluant des visites professionnelles au sein de :
-                            <b>GASYNET,</b>
-                            <b>AMIE Info,</b>
-                            <b>Port de Toamasina</b>
-                            Ces visites m’ont permis de découvrir :<br>
-
-                            ⚙️ Les systèmes informatiques utilisés dans les opérations portuaires <br>
-
-                            🌐 Les infrastructures réseaux et télécommunications <br>
-
-                            🖥️ Les solutions IT appliquées à la gestion logistique et douanière <br>
-
-                            📡 L’intégration des technologies numériques dans les opérations industrielles <br>
-
-                            Cette expérience m’a offert une vision concrète de l’application des technologies de
-                            l’information et des télécommunications dans le monde professionnel.
-                        </p>
+                        <p>Dans le cadre de ma première année universitaire, j'ai participé à un voyage d'étude à
+                            Toamasina, incluant des visites professionnelles au sein de : <b>GASYNET,</b> <b>AMIE
+                                Info,</b> <b>Port de Toamasina</b></p>
                     </div>
                 </div>
 
@@ -996,138 +1392,34 @@
                     <div class="timeline-content">
                         <span class="timeline-date">2023-2024</span>
                         <h3>Voyage d'Étude L2</h3>
-                        <h4><u>Mahajanga: </u></h4>
-                        <p>Dans le cadre de mon parcours universitaire, j’ai participé à un voyage d’étude à Mahajanga,
-                            avec des visites professionnelles auprès de :
-
-                            <b>ASECNA</b> (Agence pour la Sécurité de la Navigation Aérienne en Afrique et à
-                            Madagascar),
-
-                            <b>GASYNET, </b>
-
-                            <b>ADEMA </b>(Association pour la Démocratie à Madagascar)
-
-                            Ces visites m’ont permis de : <br>
-
-                            📡 Découvrir les infrastructures de télécommunication utilisées dans l’aviation civile <br>
-
-                            🌐 Comprendre les systèmes de gestion numérique et les réseaux professionnels <br>
-
-                            🖥️ Observer l’intégration des technologies IT dans les organisations publiques et
-                            stratégiques <br>
-
-                            🔐 Appréhender les enjeux de sécurité des systèmes d’information <br>
-
-                            Cette immersion a renforcé ma compréhension des infrastructures télécoms et des systèmes
-                            informatiques à grande échelle.
+                        <h4><u>Mahajanga:</u></h4>
+                        <p>Dans le cadre de mon parcours universitaire, j'ai participé à un voyage d'étude à Mahajanga,
+                            avec des visites professionnelles auprès de : <b>ASECNA</b>, <b>GASYNET</b>, <b>ADEMA</b>
                         </p>
                     </div>
                 </div>
             </div>
         </section>
-        <section id="competences" class="section">
-            <h2 class="section-title">Mes <span>compétences</span></h2>
-            <div class="skills-container">
-                <div class="skills-category">
-                    <h3>Développement Web</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <i class="fab fa-html5"></i>
-                            <span>HTML5 <br>90%</span>
-                            <div class="skill-level" style="--level: 90%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-css3-alt"></i>
-                            <span>CSS3 <br>80%</span>
-                            <div class="skill-level" style="--level: 80%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-js"></i>
-                            <span>JavaScript <br>20%</span>
-                            <div class="skill-level" style="--level: 20%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-python"></i>
-                            <span>Python <br>50%</span>
-                            <div class="skill-level" style="--level: 50%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skills-category">
-                    <h3>Frameworks & Outils</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <!-- Icône de code générique -->
-                            <i class="fas fa-code"></i>
-                            <span>Django<br>50%</span>
-                            <div class="skill-level" style="--level: 50%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-flask"></i>
-                            <span>Flask <br>30%</span>
-                            <div class="skill-level" style="--level: 30%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database"></i>
-                            <span>MySQL<br>80%</span>
-                            <div class="skill-level" style="--level: 80%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-git-alt"></i>
-                            <span>Git <br>50%</span>
-                            <div class="skill-level" style="--level: 50%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skills-category">
-                    <h3>Systèmes & Réseaux</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <i class="fab fa-linux"></i>
-                            <span>Linux Ubuntu <br>80%</span>
-                            <div class="skill-level" style="--level: 85%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-windows"></i>
-                            <span>Windows <br>70%</span>
-                            <div class="skill-level" style="--level: 70%"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-network-wired"></i>
-                            <span>Réseaux <br>70%</span>
-                            <div class="skill-level" style="--level: 70%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
 
         <section id="diplomes" class="section">
             <h2 class="section-title">Mes <span>diplômes</span></h2>
             <div class="projects-grid">
                 <div class="project-card">
-
                     <div class="project-info">
                         <h3 class="section-title"><span>2024-2025</span></h3><br>
                         <u>
-                            <h4>Troisième année de Licence (L3): </h4>
+                            <h4>Troisième année de Licence (L3):</h4>
                         </u>
-                        <p> Informatique et Télécommunication à Institut Supérieur Saint Michel Itaosy (I.S.S.M.I)
-                            L'Informatique appliquée à la Télécommunication est une branche spécialisée qui utilise les
-                            outils et concepts de l'informatique pour concevoir, gérer et optimiser les systèmes de
-                            télécommunication.
-                            C'est l'interface entre le monde du logiciel et celui des infrastructures de communication.
-                        </p>
+                        <p>Informatique et Télécommunication à Institut Supérieur Saint Michel Itaosy
+                            (I.S.S.M.I)L'Informatique appliquée à la Télécommunication est une branche spécialisée qui
+                            utilise les outils et concepts de l'informatique pour concevoir, gérer et optimiser les
+                            systèmes de télécommunication. C'est l'interface entre le monde du logiciel et celui des
+                            infrastructures de communication. </p>
                         <u>
                             <h4>Les domaines d'application principaux:</h4>
                         </u>
-                        <p>Gestion et Configuration des Réseaux 🌐 <br>
-                            Traitement du Signal et des Données 📊 <br>
-                            Virtualisation des Réseaux ☁️</p>
+                        <p>Gestion et Configuration des Réseaux 🌐<br>Traitement du Signal et des Données
+                            📊<br>Virtualisation des Réseaux ☁️</p>
                         <div class="project-links">
                             <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i>ISSMI</a>
                         </div>
@@ -1138,58 +1430,47 @@
                     <div class="project-info">
                         <h3 class="section-title"><span>2023-2024</span></h3><br>
                         <u>
-                            <h4>Deuxième année de Licence -Tronc commun informatique de gestion à ISSMI: </h4>
+                            <h4>Deuxième année de Licence - Tronc commun informatique de gestion:</h4>
                         </u>
-                        <p> D'après les informations disponibles, je peux vous éclairer sur la nature de la formation
-                            que vous avez suivie.
-
-                            Le "Tronc commun : Informatique de Gestion" que vous mentionnez est très probablement la
-                            première ou la deuxième année (2022-2024 L1 et L2) de votre parcours en "Informatique et
-                            Télécommunication" à l'ISSMI.
-                        </p>
+                        <p>Institut Supérieur Saint Michel Itaosy (I.S.S.M.I). D'après les informations disponibles, je
+                            peux vous éclairer sur la nature de la formation que vous avez suivie. Le "Tronc commun :
+                            Informatique de Gestion" que vous mentionnez est très probablement la première ou la
+                            deuxième année (2022-2024 L1 et L2) de votre parcours en "Informatique et Télécommunication"
+                            à l'ISSMI. </p>
                         <u>
                             <h4>Les domaines d'application principaux:</h4>
                         </u>
                         <p>Création d'applications de gestion d'entreprise, sites web dynamiques, interfaces
-                            utilisateur.<br>
-                            Gestion des données clients, stocks, inscriptions scolaires, reporting financier.<br>
+                            utilisateur.
+                            Gestion des données clients, stocks, inscriptions scolaires, reporting financier.
                             Automatisation des processus métier (facturation, paie, comptabilité), tableaux de bord
-                            décisionnels.</p>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i>ISSMI</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-
-                    <div class="project-info">
-                        <h3 class="section-title"><span>2020-2022</span></h3><br>
-                        <u>
-                            <h4>Baccalauréat Scientifique: Série D </h4>
-                        </u>
-                        <p>
-                            La Série D du baccalauréat est une filière scientifique généraliste, présente dans plusieurs
-                            pays africains et malgaches notamment. C'est l'une des séries du baccalauréat qui met
-                            l'accent sur les sciences de la vie et de la terre ainsi que les mathématiques.
+                            décisionnels.
                         </p>
-                        <u>
-                            <h4>Les domaines d'application principaux:</h4>
-                        </u>
-                        <p>Bonne base en mathématiques ET en sciences naturelles <br>
-                            Bonnes bases scientifiques généralistes <br>
-                            Sciences Naturelles et Mathématiques</p>
                         <div class="project-links">
                             <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i>ISSMI</a>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="project-card">
+                        <div class="project-info">
+                            <h3 class="section-title"><span>2020-2021</span></h3><br>
+                            <u>
+                                <h4>Baccalauréat Scientifique: Série D</h4>
+                            </u>
+                            <p>Lycée Saint Michel Imerina Imady Ambositra. La Série D du baccalauréat est une filière
+                                scientifique généraliste, présente dans plusieurs pays africains et malgaches notamment.
+                                C'est l'une des séries du baccalauréat qui met l'accent sur les sciences de la vie et de
+                                la terre ainsi que les mathématiques. </p>
+                            <u>
+                                <h4>Les domaines d'application principaux:</h4>
+                            </u>
+                            <p>Bonne base en mathématiques ET en sciences naturelles
+                                Bonnes bases scientifiques généralistes
+                                Sciences Naturelles et Mathématiques
+                            </p>
+                        </div>
+                    </div>
         </section>
-
-
-
-
 
         <section id="competences" class="section">
             <h2 class="section-title">Mes <span>compétences</span></h2>
@@ -1224,7 +1505,6 @@
                     <h3>Frameworks & Outils</h3>
                     <div class="skills-grid">
                         <div class="skill-item">
-                            <!-- Icône de code générique -->
                             <i class="fas fa-code"></i>
                             <span>Django<br>50%</span>
                             <div class="skill-level" style="--level: 50%"></div>
@@ -1269,6 +1549,7 @@
                 </div>
             </div>
         </section>
+
         <section id="projets" class="section">
             <h2 class="section-title">Mes <span>projets</span></h2>
             <div class="projects-grid">
@@ -1278,16 +1559,15 @@
                     </div>
                     <div class="project-info">
                         <h3>Système de Gestion de Scolarité</h3>
-                        <p>Application web pour la gestion des inscriptions, notes et Semestres, Filiéres (...) des
-                            étudiants.</p>
+                        <p>Application web pour la gestion des inscriptions, notes et semestres des étudiants.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Django</span>
                             <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag"> CSS3</span>
+                            <span class="tech-tag">CSS3</span>
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">JavaScript</span>
                             <span class="tech-tag">Bootstrap</span>
-                            <span class="tech-tag">SE Ubuntu</span>
+                            <span class="tech-tag">Ubuntu</span>
                         </div>
                         <div class="project-links">
                             <a href="https://www.github.com/ravelomahazomila" class="project-link"><i
@@ -1299,16 +1579,18 @@
 
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="./images/avatar5.png" alt="Projet 2">
+                        <img src="./images/Folio.png" alt="Projet 2">
                     </div>
                     <div class="project-info">
                         <h3>Portfolio Personnel</h3>
-                        <p>Site web personnel responsive avec animations et thème sombre.</p>
+                        <p>Le Portfolio Personnel est une application web interactive développée en HTML, CSS et
+                            JavaScript, conçue pour présenter de manière professionnelle le parcours académique, les
+                            compétences et les réalisations.</p>
                         <div class="project-tech">
-                            <span class="tech-tag">SE Ubuntu</span>
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
                             <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Ubuntu</span>
                         </div>
                         <div class="project-links">
                             <a href="https://www.github.com/ravelomahazomila" class="project-link"><i
@@ -1323,15 +1605,38 @@
                         <img src="./images/Capture3.png" alt="Projet 3">
                     </div>
                     <div class="project-info">
-                        <h3>Projet réalisé en langage de programmation R</h3>
-                        <p>Développement d’un système de gestion scolaire interactif en utilisant le langage R, avec
-                            l’environnement Shiny pour l’interface web dynamique.</p>
+                        <h3>Projet en langage R</h3>
+                        <p>Développement d'un système de gestion scolaire interactif en utilisant le langage R, avec
+                            l'environnement Shiny pour l'interface web dynamique.</p>
                         <div class="project-tech">
                             <span class="tech-tag">R</span>
                             <span class="tech-tag">Shiny</span>
                             <span class="tech-tag">PostgreSQL</span>
                             <span class="tech-tag">CSS</span>
-                            <span class="tech-tag">SE Ubuntu</span>
+                            <span class="tech-tag">Ubuntu</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://www.github.com/ravelomahazomila" class="project-link"><i
+                                    class="fab fa-github"></i> Code</a>
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="./images/FilePro.png" alt="Projet 4">
+                    </div>
+                    <div class="project-info">
+                        <h3>Organisateur de Fichiers Intelligent Pro</h3>
+                        <p>Application sophistiquée qui utilise l'intelligence artificielle pour automatiser
+                            l'organisation des fichiers par type, date, taille et détection des doublons.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">R</span>
+                            <span class="tech-tag">Shiny</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">Ubuntu</span>
                         </div>
                         <div class="project-links">
                             <a href="https://www.github.com/ravelomahazomila" class="project-link"><i
@@ -1342,6 +1647,7 @@
                 </div>
             </div>
         </section>
+
         <section id="contact" class="section contact-section">
             <h2 class="section-title">Me <span>contacter</span></h2>
             <div class="contact-container">
@@ -1375,8 +1681,354 @@
         <p>Designé avec <i class="fas fa-heart" style="color: #a766ff;"></i> par Toky JN</p>
     </footer>
 
+    <!-- ==================== WIDGET IA ASSISTANT ==================== -->
+    <div class="ai-assistant-widget">
+        <button class="ai-chat-toggle" onclick="toggleAIChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="ai-chat-container" id="aiChatContainer">
+            <div class="ai-chat-header">
+                <div class="ai-header-info">
+                    <div class="ai-avatar">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="ai-title">
+                        <h4>Assistant IA Portfolio</h4>
+                        <span>● En ligne</span>
+                    </div>
+                </div>
+                <button class="ai-header-close" onclick="toggleAIChat()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="ai-suggestions" id="aiSuggestions">
+                <span class="ai-suggestion-chip" onclick="useSuggestion('compétences')">
+                    <i class="fas fa-code"></i> Compétences
+                </span>
+                <span class="ai-suggestion-chip" onclick="useSuggestion('projets')">
+                    <i class="fas fa-project-diagram"></i> Projets
+                </span>
+                <span class="ai-suggestion-chip" onclick="useSuggestion('formation')">
+                    <i class="fas fa-graduation-cap"></i> Formation
+                </span>
+                <span class="ai-suggestion-chip" onclick="useSuggestion('contact')">
+                    <i class="fas fa-envelope"></i> Contact
+                </span>
+            </div>
+
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message bot">
+                    👋 Bonjour ! Je suis l'assistant IA de Toky.
+                    Posez-moi des questions sur son parcours, ses compétences ou ses projets !
+                    <div class="ai-message-time">À l'instant</div>
+                </div>
+            </div>
+
+            <div class="ai-chat-input">
+                <input type="text" id="aiMessageInput" placeholder="Posez votre question..."
+                    onkeypress="if(event.key === 'Enter') sendAIMessage()">
+                <button onclick="sendAIMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // ==================== CONFIGURATION IA ====================
+        const AI_CONFIG = {
+            name: "Toky Jean Noël",
+            education: {
+                current: "Master 1 Sciences des Données et IA - EMIT",
+                bachelor: "Licence Informatique et Télécommunications - ISSMI (2022-2024)",
+                baccalaureate: "Bac Série D - Lycée Saint Michel (2020-2021)"
+            },
+            skills: {
+                web: ["HTML5 (90%)", "CSS3 (80%)", "JavaScript (20%)", "Python (50%)"],
+                frameworks: ["Django (50%)", "Flask (30%)", "MySQL (80%)", "Git (50%)"],
+                systems: ["Linux Ubuntu (80%)", "Windows (70%)", "Réseaux (70%)"]
+            },
+            projects: [
+                "Système de Gestion de Scolarité (Django, PostgreSQL)",
+                "Portfolio Personnel (HTML5, CSS3, JavaScript)",
+                "Application Shiny en R (R, Shiny, PostgreSQL)",
+                "Organisateur de Fichiers Intelligent Pro"
+            ],
+            experience: [
+                "Stage Professionnel - Caisse d'Epargne (2024-Présent)",
+                "Stage d'Observation - Ministère de la Communication (2023)",
+                "Voyage d'Étude Toamasina - GASYNET, AMIE Info, Port de Toamasina",
+                "Voyage d'Étude Mahajanga - ASECNA, GASYNET, ADEMA"
+            ],
+            contact: {
+                email: "ravelomahazomilatokyjeannoel@gmail.com",
+                phone: "+261 38 18 733 30",
+                location: "Antananarivo, Madagascar"
+            }
+        };
+
+        // Historique des conversations
+        let conversationHistory = [];
+        let isTyping = false;
+
+        // ==================== FONCTIONS DU CHAT ====================
+        function toggleAIChat() {
+            const container = document.getElementById('aiChatContainer');
+            container.classList.toggle('open');
+
+            if (container.classList.contains('open')) {
+                trackAnalytics('chat_opened');
+            }
+        }
+
+        function addMessage(message, isUser = false) {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${isUser ? 'user' : 'bot'}`;
+
+            const time = new Date().toLocaleTimeString('fr-FR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            messageDiv.innerHTML = `
+                ${message}
+                <div class="ai-message-time">${time}</div>
+            `;
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Sauvegarder dans l'historique
+            conversationHistory.push({
+                role: isUser ? 'user' : 'assistant',
+                message: message,
+                time: time
+            });
+        }
+
+        function showTypingIndicator() {
+            if (isTyping) return;
+
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="ai-typing-dots">
+                    <span class="ai-typing-dot"></span>
+                    <span class="ai-typing-dot"></span>
+                    <span class="ai-typing-dot"></span>
+                </div>
+            `;
+
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            isTyping = true;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+            isTyping = false;
+        }
+
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+
+            // Compétences
+            if (lowerMessage.includes('compétence') || lowerMessage.includes('skill') ||
+                lowerMessage.includes('sais') || lowerMessage.includes('maîtrise')) {
+                return `Voici les compétences de Toky :\n\n` +
+                    `🌐 Développement Web : ${AI_CONFIG.skills.web.join(', ')}\n` +
+                    `🛠️ Frameworks & Outils : ${AI_CONFIG.skills.frameworks.join(', ')}\n` +
+                    `💻 Systèmes & Réseaux : ${AI_CONFIG.skills.systems.join(', ')}`;
+            }
+
+            // Projets
+            if (lowerMessage.includes('projet')) {
+                return `Toky a réalisé ${AI_CONFIG.projects.length} projets :\n\n` +
+                    AI_CONFIG.projects.map((p, i) => `📁 Projet ${i + 1} : ${p}`).join('\n');
+            }
+
+            // Formation
+            if (lowerMessage.includes('formation') || lowerMessage.includes('étude') ||
+                lowerMessage.includes('diplôme') || lowerMessage.includes('bac')) {
+                return `🎓 Parcours académique de Toky :\n\n` +
+                    `📚 Actuellement : ${AI_CONFIG.education.current}\n` +
+                    `📖 Licence : ${AI_CONFIG.education.bachelor}\n` +
+                    `📗 Baccalauréat : ${AI_CONFIG.education.baccalaureate}`;
+            }
+
+            // Expérience
+            if (lowerMessage.includes('expérience') || lowerMessage.includes('stage') ||
+                lowerMessage.includes('travail')) {
+                return `💼 Expériences de Toky :\n\n` +
+                    AI_CONFIG.experience.map(e => `• ${e}`).join('\n');
+            }
+
+            // Contact
+            if (lowerMessage.includes('contact') || lowerMessage.includes('email') ||
+                lowerMessage.includes('téléphone') || lowerMessage.includes('joindre')) {
+                return `📬 Coordonnées de Toky :\n\n` +
+                    `📧 Email : ${AI_CONFIG.contact.email}\n` +
+                    `📞 Téléphone : ${AI_CONFIG.contact.phone}\n` +
+                    `📍 Localisation : ${AI_CONFIG.contact.location}`;
+            }
+
+            // Bonjour
+            if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') ||
+                lowerMessage.includes('coucou') || lowerMessage.includes('hello')) {
+                return `👋 Bonjour ! Je suis ravi de vous aider. Vous pouvez me poser des questions sur :\n\n` +
+                    `• Les compétences de Toky\n` +
+                    `• Ses projets réalisés\n` +
+                    `• Sa formation et son parcours\n` +
+                    `• Ses expériences professionnelles\n` +
+                    `• Ses coordonnées de contact`;
+            }
+
+            // Réponse par défaut
+            return `Merci pour votre question ! Pour mieux vous aider, voici ce que je peux vous dire sur Toky :\n\n` +
+                `🎯 Étudiant en Master 1 Sciences des Données et IA\n` +
+                `💻 Passionné par le développement web et les nouvelles technologies\n` +
+                `📊 Compétences : HTML5 (90%), CSS3 (80%), Python (50%), MySQL (80%)\n\n` +
+                `Posez-moi des questions spécifiques sur ses compétences, projets, formation ou expériences !`;
+        }
+
+        async function sendAIMessage() {
+            const input = document.getElementById('aiMessageInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Afficher le message de l'utilisateur
+            addMessage(message, true);
+            input.value = '';
+
+            // Montrer l'indicateur de frappe
+            showTypingIndicator();
+
+            // Tracker l'analytics
+            trackAnalytics('message_sent', { message: message.substring(0, 50) });
+
+            // Simuler un délai de réflexion
+            setTimeout(() => {
+                // Cacher l'indicateur de frappe
+                hideTypingIndicator();
+
+                // Obtenir et afficher la réponse
+                const response = getAIResponse(message);
+                addMessage(response, false);
+
+                // Tracker la réponse
+                trackAnalytics('response_sent', { length: response.length });
+            }, 1500);
+        }
+
+        function useSuggestion(suggestion) {
+            const input = document.getElementById('aiMessageInput');
+
+            const suggestionMessages = {
+                'compétences': 'Quelles sont les compétences de Toky ?',
+                'projets': 'Peux-tu me parler des projets de Toky ?',
+                'formation': 'Quel est le parcours de formation de Toky ?',
+                'contact': 'Comment puis-je contacter Toky ?'
+            };
+
+            input.value = suggestionMessages[suggestion] || suggestion;
+            sendAIMessage();
+        }
+
+        // ==================== ANALYTICS ====================
+        function trackAnalytics(event, data = {}) {
+            const analyticsData = {
+                event: event,
+                timestamp: new Date().toISOString(),
+                page: window.location.pathname,
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                screenSize: `${window.screen.width}x${window.screen.height}`,
+                ...data
+            };
+
+            console.log('Analytics:', analyticsData);
+
+            // Sauvegarder dans localStorage pour stats hors ligne
+            let analytics = JSON.parse(localStorage.getItem('portfolio_analytics') || '[]');
+            analytics.push(analyticsData);
+
+            // Garder seulement les 100 derniers événements
+            if (analytics.length > 100) {
+                analytics = analytics.slice(-100);
+            }
+
+            localStorage.setItem('portfolio_analytics', JSON.stringify(analytics));
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function showNotification(title, message) {
+            const notification = document.createElement('div');
+            notification.className = 'ai-notification';
+            notification.innerHTML = `
+                <div class="ai-notification-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-notification-content">
+                    <div class="ai-notification-title">${title}</div>
+                    <div class="ai-notification-message">${message}</div>
+                </div>
+                <button class="ai-notification-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto-supprimer après 5 secondes
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // ==================== ÉVÉNEMENTS ====================
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tracker la visite
+            trackAnalytics('page_view');
+
+            // Message de bienvenue différé
+            setTimeout(() => {
+                showNotification(
+                    'Assistant IA',
+                    '👋 Besoin d\'aide ? Je suis là pour répondre à vos questions !'
+                );
+            }, 3000);
+
+            // Tracker les clics sur les liens
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    trackAnalytics('link_click', {
+                        href: this.href,
+                        text: this.textContent.substring(0, 50)
+                    });
+                });
+            });
+
+            // Tracker le temps passé
+            let startTime = Date.now();
+            window.addEventListener('beforeunload', function () {
+                const timeSpent = Math.round((Date.now() - startTime) / 1000);
+                trackAnalytics('page_exit', { timeSpent: timeSpent });
+            });
+        });
+
+        // ==================== VOS SCRIPTS ORIGINAUX ====================
         document.addEventListener('DOMContentLoaded', () => {
+            // Canvas animation
             const canvas = document.getElementById('backgroundCanvas');
             const ctx = canvas.getContext('2d');
 
@@ -1458,6 +2110,8 @@
 
             init();
             animate();
+
+            // Smooth scroll pour les liens de navigation
             document.querySelectorAll('nav ul li a').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -1470,32 +2124,19 @@
                     }
                 });
             });
-            const themeSwitcher = document.getElementById('themeSwitcher');
-            const icon = themeSwitcher.querySelector('i');
-            let isDark = true;
 
-            themeSwitcher.addEventListener('click', () => {
-                if (isDark) {
-                    document.body.style.backgroundColor = '#f5f5f5';
-                    document.body.style.color = '#333';
-                    document.querySelector('.navbar').style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-                    icon.classList.remove('fa-moon');
-                    icon.classList.add('fa-sun');
-                } else {
-                    document.body.style.backgroundColor = '#1a0f2b';
-                    document.body.style.color = '#e0e0e0';
-                    document.querySelector('.navbar').style.backgroundColor = 'rgba(26, 15, 43, 0.85)';
-                    icon.classList.remove('fa-sun');
-                    icon.classList.add('fa-moon');
-                }
-                isDark = !isDark;
-            });
+            // Formulaire de contact
             const contactForm = document.getElementById('contactForm');
             contactForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 alert('Message envoyé ! (Démonstration)');
                 contactForm.reset();
+
+                // Tracker l'événement
+                trackAnalytics('contact_form_submit');
             });
+
+            // Animation des compétences
             const skillLevels = document.querySelectorAll('.skill-level');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
